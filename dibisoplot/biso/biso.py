@@ -4,6 +4,7 @@ import logging
 import warnings
 from collections import defaultdict
 import traceback
+from pprint import pprint
 import re
 
 from collections import Counter
@@ -434,10 +435,10 @@ class Chapters(Biso):
     """
     A class to fetch and generate a table of book chapters.
 
-    :cvar figure_file_extension: The file extension for the figures ("tex" for LaTeX file).
+    :cvar figure_file_extension: The file extension for the figures (set from tex to HTML).
     """
 
-    figure_file_extension = "tex"
+    figure_file_extension = "html"
 
 
     def __init__(self, entity_id: str, year: int | None = None, **kwargs):
@@ -510,28 +511,42 @@ class Chapters(Biso):
 
     def get_figure(self) -> str:
         """
-        Generate a LaTeX longtable of book chapters.
+        Generate a HTML table of book chapters.
 
-        :return: LaTeX code for the longtable representing the book chapters data.
+        :return: TODO aligner l'écriture de la figure sur dibisoreporting l.  472 sq. => ajouter HTML à la liste des extensions autorisées ?
+.
         :rtype: str
         """
+                # this should be modified as well, MS #
+
         if self.data_status == DataStatus.NOT_FETCHED:
             self.fetch_data()
         if self.data_status == DataStatus.NO_DATA:
             return self.get_no_data_latex()
         if self.data_status == DataStatus.ERROR:
             return self.get_error_latex()
-
-        latex_table = self.dataframe_to_longtable(
-            self.data,
-            alignments=['p{.4\\linewidth}','p{.35\\linewidth}','p{.15\\linewidth}'],
-            caption=self._("List of chapters entered in HAL"),
-            label='tab_chapters',
-            vertical_lines=False,
-            max_plotted_entities=self.max_plotted_entities,
+        
+        chapters_html = self.data.to_html(
+            index=False,  # désactive l'ajout d'un n° de ligne incrémenté, 1er numéro = 0 par défault
+            classes='table',  # ajout de classe(s) CSS
+            border=0, 
+            escape=False,  # changer pour True serait sans doute plus prudent
+            # add caption + label + max_plottedn_entities ? cf old tex version MS
         )
 
-        return latex_table
+        return chapters_html
+
+        # old tex version => MS
+        #     latex_table = self.dataframe_to_longtable(
+        #     self.data,
+        #     alignments=['p{.4\\linewidth}','p{.35\\linewidth}','p{.15\\linewidth}'],
+        #     caption=self._("List of chapters entered in HAL"),
+        #     label='tab_chapters',
+        #     vertical_lines=False,
+        #     max_plotted_entities=self.max_plotted_entities,
+        # )
+
+        # return latex_table
 
 
 class CollaborationMap(Biso):
@@ -551,8 +566,8 @@ class CollaborationMap(Biso):
     default_countries_lines_color = "#999999"
     default_frame_color = default_countries_lines_color
     # override Biso class default height and width
-    default_height = 500
-    default_width = 1200
+    default_height = 700
+    default_width = 1300
     default_height_zoom = 800
     default_width_zoom = 1200
     default_zoom_lat_range = [33.5,71]
@@ -858,7 +873,10 @@ class CollaborationMap(Biso):
             ),
         )
 
-        fig.update_layout(margin=self.margin)
+        fig.update_layout(
+            margin=self.margin,
+            autosize=True
+            )
 
         if self.title is not None:
             fig.update_layout(title=self.title)
@@ -1157,10 +1175,10 @@ class Journals(Biso):
     """
     A class to fetch and generate a table of journals.
 
-    :cvar figure_file_extension: The file extension for the figures ("tex" for LaTeX file).
+    :cvar figure_file_extension: The file extension for the figures (set from "tex" to HTML).
     """
 
-    figure_file_extension = "tex"
+    figure_file_extension = "html"
 
     def __init__(self, entity_id: str, year: int | None = None, **kwargs):
         """
@@ -1211,11 +1229,11 @@ class Journals(Biso):
 
         def get_oa_status_latex_emoji(status) -> str:
             if pd.isna(status):
-                return "\\emoji{white-question-mark}"
+                return "&#10068;" # UTF-8 white question mark
             elif status:
-                return "\\emoji{check-mark-button}"
+                return "&#9989;" # UTF-8 check mark button
             else:
-                return "\\emoji{cross-mark}"
+                return "&#10060;" # UTF-8 cross mark button
 
         try:
             if self.scanr_api_url is None:
@@ -1393,11 +1411,12 @@ class Journals(Biso):
 
     def get_figure(self) -> str:
         """
-        Generate a LaTeX longtable of journals.
+        Generate a HTML table of journals.
 
-        :return: LaTeX code for the longtable representing the journals data.
+        :return: HTML table representing the journals data.
         :rtype: str
         """
+        # this should be modified as well #
         if self.data_status == DataStatus.NOT_FETCHED:
             self.fetch_data()
         if self.data_status == DataStatus.NO_DATA:
@@ -1416,17 +1435,29 @@ class Journals(Biso):
             "paid_apc": self._("Paid APC"),
         })
 
-        latex_table = self.dataframe_to_longtable(
-            df,
-            alignments=['p{.27\\linewidth}','P{.18\\linewidth}','P{.07\\linewidth}','P{.12\\linewidth}','P{.12\\linewidth}','P{.07\\linewidth}'],
-            caption=self._("List of journals, publishers, open access status and paid APC") + ". " +
-                    self._("From the list of publications in HAL and the data of the BSO") + " " + self.scanr_bso_version + ".",
-            label='tab_journals',
-            vertical_lines=False,
-            max_plotted_entities=self.max_plotted_entities,
+        journals_html = df.to_html(
+            index=False,  # désactive l'ajout d'un n° de ligne incrémenté, 1er numéro = 0 par défault
+            classes='table',  # ajout de classe(s) CSS
+            border=0, 
+            escape=False,  # changer pour True serait sans doute plus prudent
+            # add caption + label + max_plottedn_entities ? cf old tex version MS
         )
 
-        return latex_table
+        return journals_html
+
+        # old tex version => MS
+
+        # latex_table = self.dataframe_to_longtable(
+        #     df,
+        #     alignments=['p{.27\\linewidth}','P{.18\\linewidth}','P{.07\\linewidth}','P{.12\\linewidth}','P{.12\\linewidth}','P{.07\\linewidth}'],
+        #     caption=self._("List of journals, publishers, open access status and paid APC") + ". " +
+        #             self._("From the list of publications in HAL and the data of the BSO") + " " + self.scanr_bso_version + ".",
+        #     label='tab_journals',
+        #     vertical_lines=False,
+        #     max_plotted_entities=self.max_plotted_entities,
+        # )
+
+        # return latex_table
 
 
 class JournalsHal(Biso):

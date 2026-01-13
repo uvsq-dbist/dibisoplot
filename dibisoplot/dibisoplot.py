@@ -8,6 +8,7 @@ import plotly.express as px
 from dibisoplot.translation import get_translator
 from dibisoplot.utils import get_empty_plot_with_message, get_empty_latex_with_message, get_bar_width
 
+# changement répartition du code = classes DataStatus et Dibisoplot auparavant définies dans biso.py, utils désormais dans utils.py
 
 class DataStatus(Enum):
     """Status of the data."""
@@ -24,7 +25,7 @@ class Dibisoplot:
     This class is not designed to be called directly but rather to provide general methods to the different plot types.
 
     :cvar orientation: Orientation for plots ('v' for vertical, 'h' for horizontal).
-    :cvar figure_file_extension: File extension of the figure (pdf, tex...).
+    :cvar figure_file_extension: File extension of the figure (png, html...).
     :cvar default_dynamic_bar_width: Default width for bars in plots when the height is set dynamically.
     :cvar default_height: Default height for plots.
     :cvar default_legend_pos: Default position for the legend.
@@ -33,7 +34,7 @@ class Dibisoplot:
 
     # TODO: change default orientation value to 'h'
     orientation = 'v'
-    figure_file_extension = "pdf"
+    figure_file_extension = "png"
 
     default_dynamic_bar_width = 0.7
     default_height = 600
@@ -54,7 +55,7 @@ class Dibisoplot:
             main_color: str = "blue",
             margin: dict = None,
             max_entities: int | None = 1000,
-            max_plotted_entities: int = 25,
+            max_plotted_entities: int = 25, # à augmenter, MS ?
             template: str = "simple_white",
             text_position: str = "outside",
             title: str | None = None,

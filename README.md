@@ -2,7 +2,7 @@
 
 Copie de la bibliothèque [dibisoplot](https://github.com/dibiso-upsaclay/dibisoplot) pour adaptation locale.
 
-branche main -> traque le repo d'origine (DiBISO/Université Paris-Saclay)
+branche main -> traque le repo d'origine (DiBISO/Université Paris-Saclay)  
 branche dbist -> modifications effectuées par l'équipe de la DBIST/UVSQ.
 
 ## Liste des changements

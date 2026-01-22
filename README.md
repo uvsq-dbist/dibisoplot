@@ -3,23 +3,23 @@
 Copie de la bibliothèque [dibisoplot](https://github.com/dibiso-upsaclay/dibisoplot) pour adaptation locale.
 
 branche main -> traque le repo d'origine (DiBISO/Université Paris-Saclay)  
-branche dbist -> modifications effectuées par l'équipe de la DBIST/UVSQ.
+branche dbist -> modifications effectuées par l'équipe de la DBIST/UVSQ
 
 ## Liste des changements
 
-1. format des figures produites : passage de tex à html et de pdf à png
-2. légères modifications du format des cartes
-3. Pour des raisons de configuration locale d'environnement de travail (= Windows), les versions des bibliothèques plotly et kaleido ont dû être modifiées à la fois pour dibisoplot et dibisoreporting. La configuration suivante fonctionne sans dommage apparent : 
+1. Format des figures produites : passage de .tex à .html et de .pdf à .png
+2. Légère modification du format des cartes et de celui des messages d'erreurs affichés *comme figures*
+3. Pour des raisons d'environnement de travail local (= Windows sans accès au sous-système Linux), les versions des bibliothèques plotly et kaleido ont dû être modifiées à la fois pour *dibisoplot* et *dibisoreporting*. La configuration suivante fonctionne sans dommage apparent : 
 - plotly 6.3.1
-- kaleido 1.1.0 
-- openalex-analysis 0.15.2, malgré une erreur de compatibilité avec kaleido signalée par pip, sans conséquence notable
+- kaleido 1.2.0 
+- openalex-analysis 0.15.2, malgré une erreur de compatibilité avec cette version de kaleido, sans conséquence notable.  
 Les fichiers requirements.txt et pyproject.toml ont été mis à jour en conséquence.
 
 ## TO DO
 
-- [ ] refondre les noms des fonctions encore marquées par LaTeX
-- [ ] dé-LaTeXiser les messages d'erreurs, fallbacks, etc => simplification générale 
-- [ ] faire pour pubpart le travail effectué sur biso
+- [ ] dé-LaTeXiser les messages d'erreurs *passim* 
+- [ ] dé-LaTeXiser pubpart
+- [ ] dé-LaTeXiser la biblio ?
 
 ---
 

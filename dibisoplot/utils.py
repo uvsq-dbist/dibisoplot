@@ -21,24 +21,24 @@ def get_hal_doc_type_name(name):
 def get_empty_plot_with_message(message: str) -> go.Figure:
     """Create an empty plot with a message."""
     fig = go.Figure()
-    fig.add_annotation(text=message, showarrow=False)
-    fig.update_layout(showlegend=False, template="simple_white")
+    fig.add_annotation(
+        text=message, 
+        x=0.5,
+        y=0.5,
+        xref="paper",
+        yref="paper",
+        font=dict(size=14),
+        align="center",
+        showarrow=False)
+    fig.update_layout(showlegend=False, template="simple_white", height=120, margin=dict(l=10, r=10, t=10, b=10),)
     fig.update_xaxes(visible=False)
     fig.update_yaxes(visible=False)
     return fig
 
-
-def get_empty_latex_with_message(message: str) -> str:
-    """Create an empty plot with a message."""
-    latex_str = """
-\\setlength{\\fboxsep}{10pt}
-\\fbox{
-    \\parbox{\\textwidth}{
-        \\centering """+message+"""
-    }
-}
-"""
-    return latex_str
+def get_empty_html_with_message(message: str) -> str:
+    """Create an empty HTML page with a message."""
+    empty_html = f"""<div class="missing-fig-message"><span> {message} </span></div>"""
+    return empty_html
 
 
 # Calculate plot bar width depending on the number of bars on the plot, based on a linear interpolation of two examples

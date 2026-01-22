@@ -517,36 +517,22 @@ class Chapters(Biso):
 .
         :rtype: str
         """
-                # this should be modified as well, MS #
 
         if self.data_status == DataStatus.NOT_FETCHED:
             self.fetch_data()
         if self.data_status == DataStatus.NO_DATA:
-            return self.get_no_data_latex()
+            return self.get_no_data_html()
         if self.data_status == DataStatus.ERROR:
-            return self.get_error_latex()
+            return self.get_error_html()
         
         chapters_html = self.data.to_html(
             index=False,  # désactive l'ajout d'un n° de ligne incrémenté, 1er numéro = 0 par défault
             classes='table',  # ajout de classe(s) CSS
             border=0, 
             escape=False,  # changer pour True serait sans doute plus prudent
-            # add caption + label + max_plottedn_entities ? cf old tex version MS
         )
 
         return chapters_html
-
-        # old tex version => MS
-        #     latex_table = self.dataframe_to_longtable(
-        #     self.data,
-        #     alignments=['p{.4\\linewidth}','p{.35\\linewidth}','p{.15\\linewidth}'],
-        #     caption=self._("List of chapters entered in HAL"),
-        #     label='tab_chapters',
-        #     vertical_lines=False,
-        #     max_plotted_entities=self.max_plotted_entities,
-        # )
-
-        # return latex_table
 
 
 class CollaborationMap(Biso):
@@ -1416,13 +1402,13 @@ class Journals(Biso):
         :return: HTML table representing the journals data.
         :rtype: str
         """
-        # this should be modified as well #
+
         if self.data_status == DataStatus.NOT_FETCHED:
             self.fetch_data()
         if self.data_status == DataStatus.NO_DATA:
-            return self.get_no_data_latex()
+            return self.get_no_data_html()
         if self.data_status == DataStatus.ERROR:
-            return self.get_error_latex()
+            return self.get_error_html()
 
         df = self.data.copy(deep=True)
 

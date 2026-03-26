@@ -97,7 +97,7 @@ msgstr " entités ont été trouvées."
 
 #: biso/biso.py:356 biso/biso.py:366 biso/biso.py:437 biso/biso.py:2298
 msgid "No data"
-msgstr "Pas de données"
+msgstr "Aucune donnée n'a été trouvée pour ce type de document"
 
 #: biso/biso.py:361
 msgid "Error while making the plot"

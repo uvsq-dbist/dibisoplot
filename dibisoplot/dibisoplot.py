@@ -204,7 +204,7 @@ class Dibisoplot:
 
     def get_no_data_plot(self) -> go.Figure:
         """Create the error plot."""
-        return get_empty_plot_with_message(self._("No data"))
+        return get_empty_plot_with_message(self._("Aucune donnée n'a été trouvée pour ce type de document"))
 
 
     def get_error_plot(self) -> go.Figure:
@@ -214,7 +214,7 @@ class Dibisoplot:
 
     def get_no_data_html(self) -> str:
         """Create the error HTML div."""
-        return get_empty_html_with_message(self._("No data"))
+        return get_empty_html_with_message(self._("Aucune donnée n'a été trouvée pour ce type de document"))
     
 
     def get_error_html(self) -> str:

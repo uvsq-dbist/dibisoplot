@@ -1412,6 +1412,9 @@ class Journals(Biso):
 
         df = self.data.copy(deep=True)
 
+        if self.max_plotted_entities is not None:
+            df = df.head(self.max_plotted_entities)
+
         df = df.rename(columns={
             "journal_name": self._("Journal"),
             "publisher": self._("Publisher"),
@@ -1712,6 +1715,9 @@ class OpenAccessWorks(Biso):
             ))
 
         # Update layout for better visualization
+
+        self.legend_pos = dict(x=1, y=0.9, xanchor='right', yanchor='middle')
+
         fig.update_layout(
             barmode='stack',
             barcornerradius=self.barcornerradius,
